@@ -1,12 +1,12 @@
 const medicines = require("../model/medicineModel");
 
-/* ===============================
-   ADD MEDICINE
-================================ */
+//    ADD MEDICINE
+
 exports.addMedicineController = async (req, res) => {
   console.log("Inside addMedicineController");
 
   const { name, price, imageUrl } = req.body;
+
 
   try {
     const newMedicine = new medicines({
@@ -22,9 +22,8 @@ exports.addMedicineController = async (req, res) => {
   }
 };
 
-/* ===============================
-   GET ALL MEDICINES
-================================ */
+//    GET ALL MEDICINES
+
 exports.getAllMedicinesController = async (req, res) => {
   try {
     const allMedicines = await medicines.find().sort({ createdAt: -1 });
@@ -34,9 +33,8 @@ exports.getAllMedicinesController = async (req, res) => {
   }
 };
 
-/* ===============================
-   UPDATE MEDICINE
-================================ */
+//    UPDATE MEDICINE
+
 exports.updateMedicineController = async (req, res) => {
   const { id } = req.params;
   const { name, price, imageUrl } = req.body;
@@ -54,9 +52,9 @@ exports.updateMedicineController = async (req, res) => {
   }
 };
 
-/* ===============================
-   DELETE MEDICINE
-================================ */
+
+//    DELETE MEDICINE
+
 exports.deleteMedicineController = async (req, res) => {
   const { id } = req.params;
 

@@ -1,5 +1,5 @@
 const express = require("express")
-const { registerController, loginController } = require("./controller/userController")
+const { registerController, loginController, getFeaturedMedicinesController } = require("./controller/userController")
 const { addMedicineController, getAllMedicinesController, updateMedicineController, deleteMedicineController } = require("./controller/adminController")
 const adminJwtMiddleware = require("./middleware/adminJwtMiddleware")
 
@@ -10,6 +10,10 @@ router.post("/register",registerController)
 
 //login 
 router.post("/login",loginController)
+
+// get home medicines
+router.get("/featured-medicines", getFeaturedMedicinesController);
+
 
 // ..............................................patient.................................................
 

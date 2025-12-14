@@ -1,3 +1,4 @@
+const medicines = require("../model/medicineModel");
 const users = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 
@@ -51,6 +52,18 @@ exports.loginController = async (req, res) => {
     } else {
       res.status(404).json("User Not Found... Please Register!!!");
     }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+// get home medicines
+
+exports.getFeaturedMedicinesController = async (req, res) => {
+  try {
+    const medicinesList = await medicines.find().sort({ createdAt: -1 }).limit(6);
+
+    res.status(200).json(medicinesList);
   } catch (error) {
     res.status(500).json(error);
   }
