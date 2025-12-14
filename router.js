@@ -1,7 +1,8 @@
 const express = require("express")
-const { registerController, loginController, getFeaturedMedicinesController } = require("./controller/userController")
+const { registerController, loginController, getFeaturedMedicinesController, getSingleMedicineController } = require("./controller/userController")
 const { addMedicineController, getAllMedicinesController, updateMedicineController, deleteMedicineController } = require("./controller/adminController")
 const adminJwtMiddleware = require("./middleware/adminJwtMiddleware")
+const jwtMiddleware = require("./middleware/jwtMiddleware")
 
 const router = express.Router()
 
@@ -15,7 +16,11 @@ router.post("/login",loginController)
 router.get("/featured-medicines", getFeaturedMedicinesController);
 
 // get all medicines
-router.get("/getall-medicines", getAllMedicinesController);
+router.get("/getall-medicines",jwtMiddleware, getAllMedicinesController);
+
+// get single medicine
+router.get("/medicine/:id",jwtMiddleware ,getSingleMedicineController);
+
 
 
 // ..............................................patient.................................................

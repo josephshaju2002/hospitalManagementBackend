@@ -81,3 +81,22 @@ exports.getAllMedicinesController = async (req, res) => {
   }
 };
 
+// get one medicine
+
+exports.getSingleMedicineController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const medicine = await medicines.findById(id);
+
+    if (!medicine) {
+      return res.status(404).json("Medicine not found");
+    }
+
+    res.status(200).json(medicine);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+
