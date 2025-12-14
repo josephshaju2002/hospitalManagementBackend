@@ -14,6 +14,9 @@ router.post("/login",loginController)
 // get home medicines
 router.get("/featured-medicines", getFeaturedMedicinesController);
 
+// get all medicines
+router.get("/getall-medicines", getAllMedicinesController);
+
 
 // ..............................................patient.................................................
 

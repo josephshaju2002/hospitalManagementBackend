@@ -68,3 +68,16 @@ exports.getFeaturedMedicinesController = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+// get all medicines
+
+exports.getAllMedicinesController = async (req, res) => {
+  try {
+    const allMedicines = await medicines.find();
+    res.status(200).json(allMedicines);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+};
+
