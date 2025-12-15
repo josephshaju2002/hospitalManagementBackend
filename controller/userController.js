@@ -3,6 +3,7 @@ const users = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const stripe = require("../config/stripe");
 
+
 // register
 exports.registerController = async (req, res) => {
   console.log("Inside register Controller");

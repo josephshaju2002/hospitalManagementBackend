@@ -3,6 +3,7 @@ const { registerController, loginController, getFeaturedMedicinesController, get
 const { addMedicineController, getAllMedicinesController, updateMedicineController, deleteMedicineController } = require("./controller/adminController")
 const adminJwtMiddleware = require("./middleware/adminJwtMiddleware")
 const jwtMiddleware = require("./middleware/jwtMiddleware")
+const { sendMessageController, getUserMessagesController, getDoctorMessagesController, deleteMessageController } = require("./controller/contactMessageController")
 
 const router = express.Router()
 
@@ -25,7 +26,13 @@ router.get("/medicine/:id",jwtMiddleware ,getSingleMedicineController);
 
 // ..............................................patient.................................................
 
+// payment
 router.post("/cart-payment", jwtMiddleware, makeCartPaymentController);
+
+// send messages
+router.post("/send-message", sendMessageController);
+
+
 
 
 // ..............................................Admin.................................................
@@ -40,5 +47,17 @@ router.put("/update-medicines/:id",adminJwtMiddleware, updateMedicineController)
 
 // delete medicine
 router.delete("/delete-medicines/:id",adminJwtMiddleware, deleteMedicineController);
+
+
+
+// get user messages
+router.get("/user-messages",adminJwtMiddleware, getUserMessagesController);
+
+// get doctor messages
+router.get("/doctor-messages",adminJwtMiddleware, getDoctorMessagesController);
+
+// delete the message
+router.delete("/delete-messages/:id", adminJwtMiddleware,deleteMessageController);
+
 
 module.exports = router
