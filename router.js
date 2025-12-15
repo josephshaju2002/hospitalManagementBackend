@@ -1,5 +1,5 @@
 const express = require("express")
-const { registerController, loginController, getFeaturedMedicinesController, getSingleMedicineController } = require("./controller/userController")
+const { registerController, loginController, getFeaturedMedicinesController, getSingleMedicineController, makeCartPaymentController } = require("./controller/userController")
 const { addMedicineController, getAllMedicinesController, updateMedicineController, deleteMedicineController } = require("./controller/adminController")
 const adminJwtMiddleware = require("./middleware/adminJwtMiddleware")
 const jwtMiddleware = require("./middleware/jwtMiddleware")
@@ -24,6 +24,8 @@ router.get("/medicine/:id",jwtMiddleware ,getSingleMedicineController);
 
 
 // ..............................................patient.................................................
+
+router.post("/cart-payment", jwtMiddleware, makeCartPaymentController);
 
 
 // ..............................................Admin.................................................
