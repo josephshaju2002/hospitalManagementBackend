@@ -25,6 +25,9 @@ HospitalServer.use(express.json())
 // 9. tell server to use router
 HospitalServer.use(router)
 
+// to make images visible using static
+HospitalServer.use("/imgUploads",express.static("./imgUploads"))
+
 // 3.create port 
 const PORT = 3000
 

@@ -1,9 +1,10 @@
 const express = require("express")
-const { registerController, loginController, getFeaturedMedicinesController, getSingleMedicineController, makeCartPaymentController } = require("./controller/userController")
+const { registerController, loginController, getFeaturedMedicinesController, getSingleMedicineController, makeCartPaymentController, updateUserProfile } = require("./controller/userController")
 const { addMedicineController, getAllMedicinesController, updateMedicineController, deleteMedicineController } = require("./controller/adminController")
 const adminJwtMiddleware = require("./middleware/adminJwtMiddleware")
 const jwtMiddleware = require("./middleware/jwtMiddleware")
 const { sendMessageController, getUserMessagesController, getDoctorMessagesController, deleteMessageController } = require("./controller/contactMessageController")
+const multerConfig = require("./middleware/imgMulterMiddleware")
 
 const router = express.Router()
 
@@ -31,6 +32,9 @@ router.post("/cart-payment", jwtMiddleware, makeCartPaymentController);
 
 // send messages
 router.post("/send-message", sendMessageController);
+
+// update user profile
+router.put("/update-userProfile",jwtMiddleware,multerConfig.single("profile"),updateUserProfile);
 
 
 

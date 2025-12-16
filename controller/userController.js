@@ -3,7 +3,6 @@ const users = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const stripe = require("../config/stripe");
 
-
 // register
 exports.registerController = async (req, res) => {
   console.log("Inside register Controller");
@@ -110,8 +109,7 @@ exports.makeCartPaymentController = async (req, res) => {
 
     const userMail = req.payload;
 
-        const { items } = req.body;
-
+    const { items } = req.body;
 
     if (!items || items.length === 0) {
       return res.status(400).json("Cart is empty");
@@ -155,4 +153,43 @@ exports.makeCartPaymentController = async (req, res) => {
     res.status(500).json("Payment session creation failed");
   }
 };
+
+// update user profile
+
+exports.updateUserProfile = async (req, res) => {
+  try {
+    const userMail = req.payload;
+    const { username, bio, number, email, password } = req.body;
+
+    let profileImage = "";
+    if (req.file) {
+      profileImage = req.file.filename;
+    }
+
+    const updateData = {
+      ...(username && { username }),
+      ...(bio && { bio }),
+      ...(number && { number }),
+      ...(email && { email }),
+      ...(password && { password }),
+      ...(profileImage && { profile: profileImage }),
+    };
+
+    const updatedUser = await users.findOneAndUpdate(
+      { email: userMail }, // find user by current email
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
 
