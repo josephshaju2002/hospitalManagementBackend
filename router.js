@@ -6,6 +6,7 @@ const {
   getSingleMedicineController,
   makeCartPaymentController,
   updateUserProfile,
+  getAllDoctorsController,
 } = require("./controller/userController");
 const {
   addMedicineController,
@@ -23,8 +24,7 @@ const {
 } = require("./controller/contactMessageController");
 const multerConfig = require("./middleware/imgMulterMiddleware");
 const {
-  updateDoctorProfileController,
-  saveDoctorProfileController,
+ 
   saveOrUpdateDoctorProfile,
   getDoctorProfileController,
 } = require("./controller/doctorController");
@@ -57,6 +57,10 @@ router.post("/send-message", sendMessageController);
 
 // update user profile
 router.put("/update-userProfile",jwtMiddleware,multerConfig.single("profile"),updateUserProfile);
+
+// get all doctor profiles
+router.get("/get-all-doctors", getAllDoctorsController);
+
 
 // ..............................................Doctor.................................................
 

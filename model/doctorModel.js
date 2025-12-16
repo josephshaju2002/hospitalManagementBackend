@@ -51,8 +51,8 @@ const doctorProfileSchema = new mongoose.Schema(
     },
 
     fee: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: "",
     },
 
     duration: {

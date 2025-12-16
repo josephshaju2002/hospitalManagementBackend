@@ -2,6 +2,8 @@ const medicines = require("../model/medicineModel");
 const users = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const stripe = require("../config/stripe");
+const doctorProfiles = require("../model/doctorModel");
+
 
 // register
 exports.registerController = async (req, res) => {
@@ -193,3 +195,21 @@ exports.updateUserProfile = async (req, res) => {
 
 
 
+// get all doctor profiles
+
+exports.getAllDoctorsController = async (req, res) => {
+  try {
+    const doctors = await doctorProfiles.find({});
+
+    res.status(200).json({
+      success: true,
+      data: doctors,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch doctors",
+    });
+  }
+};
