@@ -152,4 +152,22 @@ exports.updatePatientHealthController = async (req, res) => {
   }
 };
 
+// to update health status in session storage
+exports.getLoggedInUserController = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const user = await users.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json("User not found");
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json("Failed to fetch user");
+  }
+};
+
+
 
