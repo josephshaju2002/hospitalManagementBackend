@@ -1,5 +1,6 @@
 const doctorProfiles = require("../model/doctorModel");
 const appointments = require("../model/appointmentModel");
+const users = require("../model/userModel");
 
 
 // edit doctor profile
@@ -125,6 +126,29 @@ exports.getSingleAppointmentController = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json("Failed to fetch appointment");
+  }
+};
+
+// update health status
+exports.updatePatientHealthController = async (req, res) => {
+  try {
+    const { patientId } = req.params;
+    const healthData = req.body;
+
+    const updatedUser = await users.findByIdAndUpdate(
+      patientId,
+      { health: healthData },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Health status updated",
+      data: updatedUser.health,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Failed to update health status");
   }
 };
 

@@ -32,6 +32,7 @@ const {
   getDoctorProfileController,
   getDoctorAppointmentsController,
   getSingleAppointmentController,
+  updatePatientHealthController,
 } = require("./controller/doctorController");
 const doctorJwtMiddleware = require("./middleware/doctorJwtMiddleware");
 
@@ -93,6 +94,10 @@ router.get("/doctor/appointments",jwtMiddleware,getDoctorAppointmentsController)
 
 // get single patient card
 router.get("/appointment/:id",jwtMiddleware,getSingleAppointmentController);
+
+// update health status
+router.put("/update-patient-health/:patientId",jwtMiddleware,updatePatientHealthController);
+
 
 
 

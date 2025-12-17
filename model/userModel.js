@@ -29,6 +29,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  health: {
+  bloodGroup: { type: String, default: "" },
+  height: { type: String, default: "" },
+  weight: { type: String, default: "" },
+  allergies: { type: String, default: "" },
+  conditions: { type: String, default: "" },
+  medications: { type: String, default: "" },
+  smoking: { type: String, default: "No" },
+  alcohol: { type: String, default: "No" },
+},
+
 });
 
 const users = mongoose.model("users",userSchema)
