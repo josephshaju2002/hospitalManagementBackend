@@ -1,5 +1,6 @@
 const medicines = require("../model/medicineModel");
 const users = require("../model/userModel");
+const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const stripe = require("../config/stripe");
 const doctorProfiles = require("../model/doctorModel");
@@ -46,7 +47,7 @@ exports.loginController = async (req, res) => {
     if (existingUser) {
       if (existingUser.password == password) {
         const token = jwt.sign(
-          { userMail: existingUser.email, role: existingUser.role },
+          { userMail: existingUser.email,userId: existingUser._id, role: existingUser.role },
           process.env.JWTSecretKey
         );
         res.status(200).json({ existingUser, token });
@@ -275,6 +276,31 @@ exports.getUserAppointmentsController = async (req, res) => {
   }
 };
 
+// cancel appointment
 
+// const mongoose = require("mongoose");
 
+exports.cancelAppointmentController = async (req, res) => {
+  try {
+    const appointmentId = new mongoose.Types.ObjectId(req.params.id);
+    const patientId = new mongoose.Types.ObjectId(req.userId);
+
+    const deletedAppointment = await appointments.findOneAndDelete({
+      _id: appointmentId,
+      patientId: patientId,
+    });
+
+    if (!deletedAppointment) {
+      return res.status(404).json("Appointment not found");
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Appointment cancelled and removed successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Failed to cancel appointment");
+  }
+};
 

@@ -9,6 +9,7 @@ const {
   getAllDoctorsController,
   bookAppointmentController,
   getUserAppointmentsController,
+  cancelAppointmentController,
 } = require("./controller/userController");
 const {
   addMedicineController,
@@ -68,6 +69,11 @@ router.post("/book-appointment",jwtMiddleware,bookAppointmentController);
 
 // get user appointments
 router.get("/my-appointments",jwtMiddleware,getUserAppointmentsController);
+
+// cancel appointment
+router.delete("/cancel-appointment/:id",jwtMiddleware,cancelAppointmentController);
+
+
 
 
 
