@@ -8,6 +8,7 @@ const {
   updateUserProfile,
   getAllDoctorsController,
   bookAppointmentController,
+  getUserAppointmentsController,
 } = require("./controller/userController");
 const {
   addMedicineController,
@@ -64,6 +65,10 @@ router.get("/get-all-doctors", getAllDoctorsController);
 
 // book an appointment
 router.post("/book-appointment",jwtMiddleware,bookAppointmentController);
+
+// get user appointments
+router.get("/my-appointments",jwtMiddleware,getUserAppointmentsController);
+
 
 
 

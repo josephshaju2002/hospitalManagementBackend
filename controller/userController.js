@@ -248,4 +248,33 @@ exports.bookAppointmentController = async (req, res) => {
   }
 };
 
+// get appointment details
+
+exports.getUserAppointmentsController = async (req, res) => {
+  try {
+    const userMail = req.payload; // email from token
+
+    // 🔥 get correct user _id
+    const user = await users.findOne({ email: userMail });
+
+    if (!user) {
+      return res.status(404).json("User not found");
+    }
+
+    const userAppointments = await appointments
+      .find({ patientId: user._id }) // ✅ MATCHES DB
+      .populate("doctorId");
+
+    res.status(200).json({
+      success: true,
+      data: userAppointments,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Failed to fetch appointments");
+  }
+};
+
+
+
 
