@@ -1,4 +1,6 @@
 const doctorProfiles = require("../model/doctorModel");
+const appointments = require("../model/appointmentModel");
+
 
 // edit doctor profile
 exports.saveOrUpdateDoctorProfile = async (req, res) => {
@@ -80,3 +82,32 @@ exports.getDoctorProfileController = async (req, res) => {
     });
   }
 };
+
+// get all appointments
+exports.getDoctorAppointmentsController = async (req, res) => {
+  try {
+    const doctorUserId = req.userId; 
+
+    const doctorProfile = await doctorProfiles.findOne({
+      userId: doctorUserId,
+    });
+
+    if (!doctorProfile) {
+      return res.status(404).json("user profile not found");
+    }
+
+    const appointmentsList = await appointments
+      .find({ doctorId: doctorProfile._id })
+      .populate("patientId", "username email age") 
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      data: appointmentsList,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Failed to fetch doctor appointments");
+  }
+};
+

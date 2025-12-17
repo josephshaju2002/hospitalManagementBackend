@@ -30,6 +30,7 @@ const {
  
   saveOrUpdateDoctorProfile,
   getDoctorProfileController,
+  getDoctorAppointmentsController,
 } = require("./controller/doctorController");
 const doctorJwtMiddleware = require("./middleware/doctorJwtMiddleware");
 
@@ -86,6 +87,10 @@ router.put("/update-doctor-profile",doctorJwtMiddleware,multerConfig.single("pho
 // GET DOCTOR PROFILE
 router.get("/get-doctor-profile",doctorJwtMiddleware,getDoctorProfileController);
 
+// get all appointments
+router.get("/doctor/appointments",jwtMiddleware,getDoctorAppointmentsController);
+
+
 
 // ..............................................Admin.................................................
 // add medicine
@@ -95,18 +100,10 @@ router.post("/add-medicine", adminJwtMiddleware, addMedicineController);
 router.get("/all-medicines", adminJwtMiddleware, getAllMedicinesController);
 
 // update medicine
-router.put(
-  "/update-medicines/:id",
-  adminJwtMiddleware,
-  updateMedicineController
-);
+router.put("/update-medicines/:id",adminJwtMiddleware,updateMedicineController);
 
 // delete medicine
-router.delete(
-  "/delete-medicines/:id",
-  adminJwtMiddleware,
-  deleteMedicineController
-);
+router.delete("/delete-medicines/:id",adminJwtMiddleware,deleteMedicineController);
 
 // get user messages
 router.get("/user-messages", adminJwtMiddleware, getUserMessagesController);
@@ -115,10 +112,6 @@ router.get("/user-messages", adminJwtMiddleware, getUserMessagesController);
 router.get("/doctor-messages", adminJwtMiddleware, getDoctorMessagesController);
 
 // delete the message
-router.delete(
-  "/delete-messages/:id",
-  adminJwtMiddleware,
-  deleteMessageController
-);
+router.delete("/delete-messages/:id",adminJwtMiddleware,deleteMessageController);
 
 module.exports = router;
