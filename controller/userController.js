@@ -3,6 +3,8 @@ const users = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const stripe = require("../config/stripe");
 const doctorProfiles = require("../model/doctorModel");
+const appointments = require("../model/appointmentModel");
+
 
 
 // register
@@ -213,3 +215,37 @@ exports.getAllDoctorsController = async (req, res) => {
     });
   }
 };
+
+// book appointments
+exports.bookAppointmentController = async (req, res) => {
+  try {
+    const userMail = req.payload; 
+    const { doctorId, date, time } = req.body;
+
+    const patient = await users.findOne({ email: userMail });
+
+    if (!patient) {
+      return res.status(404).json("Patient not found");
+    }
+
+    const newAppointment = new appointments({
+      doctorId,
+      patientId: patient._id, 
+      date,
+      time,
+    });
+
+    await newAppointment.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Appointment booked successfully",
+      data: newAppointment,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Failed to book appointment");
+  }
+};
+
+

@@ -7,6 +7,7 @@ const {
   makeCartPaymentController,
   updateUserProfile,
   getAllDoctorsController,
+  bookAppointmentController,
 } = require("./controller/userController");
 const {
   addMedicineController,
@@ -60,6 +61,10 @@ router.put("/update-userProfile",jwtMiddleware,multerConfig.single("profile"),up
 
 // get all doctor profiles
 router.get("/get-all-doctors", getAllDoctorsController);
+
+// book an appointment
+router.post("/book-appointment",jwtMiddleware,bookAppointmentController);
+
 
 
 // ..............................................Doctor.................................................
