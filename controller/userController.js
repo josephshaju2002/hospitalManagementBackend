@@ -278,7 +278,6 @@ exports.getUserAppointmentsController = async (req, res) => {
 
 // cancel appointment
 
-// const mongoose = require("mongoose");
 
 exports.cancelAppointmentController = async (req, res) => {
   try {

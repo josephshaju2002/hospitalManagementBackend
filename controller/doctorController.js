@@ -111,3 +111,21 @@ exports.getDoctorAppointmentsController = async (req, res) => {
   }
 };
 
+// get single patient details
+exports.getSingleAppointmentController = async (req, res) => {
+  try {
+    const appointment = await appointments
+      .findById(req.params.id)
+      .populate("patientId")
+      .populate("doctorId");
+
+    res.status(200).json({
+      success: true,
+      data: appointment,
+    });
+  } catch (error) {
+    res.status(500).json("Failed to fetch appointment");
+  }
+};
+
+
