@@ -24,10 +24,17 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
       default: "Booked",
     },
+
+    prescription: [
+      {
+        medicine: { type: String, required: true },
+        dosage: { type: String, required: true },   
+        duration: { type: String, required: true }, 
+        notes: { type: String, default: "" },
+      },
+    ],
   },
   { timestamps: true }
 );
 
 module.exports = mongoose.model("appointments", appointmentSchema);
-
-

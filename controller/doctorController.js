@@ -169,5 +169,29 @@ exports.getLoggedInUserController = async (req, res) => {
   }
 };
 
+// prescribe medicines
+exports.updatePrescriptionController = async (req, res) => {
+  try {
+    const { appointmentId } = req.params;
+    const { prescription } = req.body;
+
+    const updatedAppointment = await appointments.findByIdAndUpdate(
+      appointmentId,
+      { prescription },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Prescription updated",
+      data: updatedAppointment.prescription,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Failed to update prescription");
+  }
+};
+
+
 
 
