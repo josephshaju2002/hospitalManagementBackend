@@ -89,3 +89,28 @@ exports.adminDashboardCounts = async (req, res) => {
     res.status(500).json("Failed to fetch dashboard counts");
   }
 };
+
+// get appointments
+
+exports.adminAllAppointmentsController = async (req, res) => {
+  try {
+    if (req.role !== "admin") {
+      return res.status(403).json("Access denied");
+    }
+
+    const allAppointments = await appointments
+      .find()
+      .populate("patientId", "username email")
+      .populate("doctorId", "name specialization")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      data: allAppointments,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Failed to fetch appointments");
+  }
+};
+
