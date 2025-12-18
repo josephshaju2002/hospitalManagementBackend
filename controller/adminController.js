@@ -1,4 +1,7 @@
 const medicines = require("../model/medicineModel");
+const users = require("../model/userModel");
+const doctors = require("../model/doctorModel")
+const appointments = require("../model/appointmentModel")
 
 //    ADD MEDICINE
 
@@ -7,7 +10,7 @@ exports.addMedicineController = async (req, res) => {
 
   const { name, price, imageUrl } = req.body;
 
-
+  
   try {
     const newMedicine = new medicines({
       name,
@@ -63,5 +66,26 @@ exports.deleteMedicineController = async (req, res) => {
     res.status(200).json("Medicine deleted successfully");
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+// dashboard counts
+exports.adminDashboardCounts = async (req, res) => {
+  try {
+    const totalUsers = await users.countDocuments({ role: "user" });
+    const totalDoctors = await doctors.countDocuments();
+    const totalAppointments = await appointments.countDocuments();
+
+    res.status(200).json({
+      success: true,
+      data: {
+        users: totalUsers,
+        doctors: totalDoctors,
+        appointments: totalAppointments,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Failed to fetch dashboard counts");
   }
 };

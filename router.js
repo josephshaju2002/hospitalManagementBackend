@@ -16,6 +16,7 @@ const {
   getAllMedicinesController,
   updateMedicineController,
   deleteMedicineController,
+  adminDashboardCounts,
 } = require("./controller/adminController");
 const adminJwtMiddleware = require("./middleware/adminJwtMiddleware");
 const jwtMiddleware = require("./middleware/jwtMiddleware");
@@ -129,5 +130,9 @@ router.get("/doctor-messages", adminJwtMiddleware, getDoctorMessagesController);
 
 // delete the message
 router.delete("/delete-messages/:id",adminJwtMiddleware,deleteMessageController);
+
+// get dashboard count
+router.get("/admin/dashboard-counts", adminJwtMiddleware, adminDashboardCounts);
+
 
 module.exports = router;
