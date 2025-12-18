@@ -114,3 +114,25 @@ exports.adminAllAppointmentsController = async (req, res) => {
   }
 };
 
+// get all doctors
+exports.getAllDoctorsforAdminController = async (req, res) => {
+  try {
+    const alldoctors = await doctors.find();
+    res.status(200).json(alldoctors);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+// get single doctor
+exports.getSingleDoctorProfileController = async (req, res) => {
+  try {
+    const doctor = await doctors.findById(req.params.id);
+    res.status(200).json(doctor);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+
+

@@ -18,6 +18,8 @@ const {
   deleteMedicineController,
   adminDashboardCounts,
   adminAllAppointmentsController,
+  getAllDoctorsforAdminController,
+  getSingleDoctorProfileController,
 } = require("./controller/adminController");
 const adminJwtMiddleware = require("./middleware/adminJwtMiddleware");
 const jwtMiddleware = require("./middleware/jwtMiddleware");
@@ -137,6 +139,14 @@ router.get("/admin/dashboard-counts", adminJwtMiddleware, adminDashboardCounts);
 
 // get appointments
 router.get("/admin/all-appointments",adminJwtMiddleware,adminAllAppointmentsController);
+
+// get all doctors
+router.get("/all-doctors",adminJwtMiddleware,getAllDoctorsforAdminController);
+
+// get single doctor
+router.get("/get-single-doctor/:id",adminJwtMiddleware,getSingleDoctorProfileController);
+
+
 
 
 
