@@ -9,7 +9,6 @@ exports.saveOrUpdateDoctorProfile = async (req, res) => {
     const userId = req.userId;
     const data = req.body;
 
-    // ✅ parse arrays safely
     if (typeof data.availableDays === "string") {
       data.availableDays = JSON.parse(data.availableDays);
     }
@@ -22,10 +21,12 @@ exports.saveOrUpdateDoctorProfile = async (req, res) => {
       data.skills = JSON.parse(data.skills);
     }
 
-    // ✅ find existing profile
+     if (typeof data.consultationTime === "string") {
+      data.consultationTime = JSON.parse(data.consultationTime);
+    }
+
     const existingProfile = await doctorProfiles.findOne({ userId });
 
-    // ✅ IMPORTANT FIX HERE
    if (req.file) {
   data.photo = req.file.filename;
 } else if (existingProfile) {

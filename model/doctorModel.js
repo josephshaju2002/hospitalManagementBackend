@@ -64,6 +64,12 @@ const doctorProfileSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+   consultationTime: {
+  start: { type: String, default: "" },
+  end: { type: String, default: "" },
+},
+
+
   },
   { timestamps: true }
 );
