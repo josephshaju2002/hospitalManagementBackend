@@ -9,6 +9,7 @@ const adminJwtMiddleware = (req, res, next) => {
     const jwtResponse = jwt.verify(token, process.env.JWTSecretKey);
     console.log(jwtResponse);
     req.payload = jwtResponse.userMail;
+    req.id = jwtResponse.userId
     req.role = jwtResponse.role;
     if(jwtResponse.role == "admin"){
       next()

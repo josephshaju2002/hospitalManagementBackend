@@ -20,6 +20,7 @@ const {
   adminAllAppointmentsController,
   getAllDoctorsforAdminController,
   getSingleDoctorProfileController,
+  updateAdminSettingsController,
 } = require("./controller/adminController");
 const adminJwtMiddleware = require("./middleware/adminJwtMiddleware");
 const jwtMiddleware = require("./middleware/jwtMiddleware");
@@ -145,6 +146,9 @@ router.get("/all-doctors",adminJwtMiddleware,getAllDoctorsforAdminController);
 
 // get single doctor
 router.get("/get-single-doctor/:id",adminJwtMiddleware,getSingleDoctorProfileController);
+
+// admin settings
+router.put( "/updateadmin-settings", adminJwtMiddleware,multerConfig.single("profile"), updateAdminSettingsController);
 
 
 

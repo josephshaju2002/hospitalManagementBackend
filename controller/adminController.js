@@ -134,5 +134,58 @@ exports.getSingleDoctorProfileController = async (req, res) => {
   }
 };
 
+// update admin settings
+exports.updateAdminSettingsController = async (req, res) => {
+  try {
+    const adminId = req.id;
+    const role = req.role;
+
+    const { username, email, password } = req.body;
+
+    if (role !== "admin") {
+      return res.status(401).json("Unauthorized user");
+    }
+
+    const updateData = {};
+
+    if (username && username.trim() !== "") {
+      updateData.username = username;
+    }
+
+    if (email && email.trim() !== "") {
+      updateData.email = email;
+    }
+
+    if (password && password.trim() !== "") {
+      updateData.password = password; // plain (matches your login)
+    }
+
+    if (req.file) {
+      updateData.profile = req.file.filename;
+    }
+
+    const updatedAdmin = await users.findByIdAndUpdate(
+      adminId,
+      { $set: updateData },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Admin settings updated successfully",
+      data: updatedAdmin,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Failed to update admin settings");
+  }
+};
+
+
+
+
+
+
+
 
 
