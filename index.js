@@ -17,6 +17,9 @@ const router = require("./router");
 // 11. import connection file
 require("./db/connection");
 
+const ChatMessage = require("./model/chatMessageModel");
+
+
 // 2. create express app
 const HospitalServer = express();
 
@@ -46,15 +49,28 @@ HospitalServer.use("/imgUploads", express.static("./imgUploads"));
 io.on("connection", (socket) => {
   console.log("Socket connected:", socket.id);
 
-  // join appointment chat room
-  socket.on("joinRoom", ({ appointmentId }) => {
+  // JOIN ROOM
+  socket.on("joinRoom", async ({ appointmentId }) => {
     socket.join(appointmentId);
-    console.log(`Joined room: ${appointmentId}`);
+
+    const messages = await ChatMessage.find({ appointmentId })
+      .sort({ createdAt: 1 });
+
+    socket.emit("chatHistory", messages);
   });
 
-  // send message
-  socket.on("sendMessage", (data) => {
-    io.to(data.appointmentId).emit("receiveMessage", data);
+  // SEND MESSAGE
+  socket.on("sendMessage", async (data) => {
+    const role =
+    data.sender.role === "user" ? "patient" : data.sender.role;
+    const savedMessage = await ChatMessage.create({
+      appointmentId: data.appointmentId,
+      senderId: data.sender._id,
+      senderRole: data.sender.role,
+      message: data.message,
+    });
+
+    io.to(data.appointmentId).emit("receiveMessage", savedMessage);
   });
 
   socket.on("disconnect", () => {
