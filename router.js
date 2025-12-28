@@ -40,6 +40,7 @@ const {
   updatePatientHealthController,
   getLoggedInUserController,
   updatePrescriptionController,
+  terminateAppointmentController,
 } = require("./controller/doctorController");
 const doctorJwtMiddleware = require("./middleware/doctorJwtMiddleware");
 
@@ -111,6 +112,8 @@ router.get("/get-logged-user", jwtMiddleware, getLoggedInUserController);
 // prescribe medicines
 router.put("/update-prescription/:appointmentId",jwtMiddleware,updatePrescriptionController);
 
+// terminate appointment
+router.delete("/doctor/terminate-appointment/:appointmentId",doctorJwtMiddleware,terminateAppointmentController);
 
 
 // ..............................................Admin.................................................

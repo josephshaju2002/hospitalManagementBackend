@@ -17,8 +17,8 @@ const doctorJwtMiddleware = async (req, res, next) => {
       return res.status(404).json("User not found");
     }
 
-    req.userId = user._id;      // ✅ usable everywhere
-    req.email = user.email;     // optional
+    req.userId = user._id;      
+    req.email = user.email;     
     req.role = user.role;
 
     next();

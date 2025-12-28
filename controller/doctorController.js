@@ -193,6 +193,34 @@ exports.updatePrescriptionController = async (req, res) => {
   }
 };
 
+// terminate appointments
+
+exports.terminateAppointmentController = async (req, res) => {
+  try {
+    const { appointmentId } = req.params;
+
+    const appointment = await appointments.findById(appointmentId);
+
+    if (!appointment) {
+      return res.status(404).json("Appointment not found");
+    }
+
+    // ✅ NO COMPARISON NEEDED
+    // Doctor is already authenticated via JWT
+
+    await appointments.findByIdAndDelete(appointmentId);
+
+    res.status(200).json("Appointment terminated successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Server error");
+  }
+};
+
+
+
+
+
 
 
 
